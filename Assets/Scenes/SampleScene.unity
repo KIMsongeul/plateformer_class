@@ -348,11 +348,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  dashPower: 0
   objLayers:
     serializedVersion: 2
     m_Bits: 0
-  jumpPower: 3
+  jumpPower: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  checkGroundDistance: 0
 --- !u!50 &1163099568
 Rigidbody2D:
   serializedVersion: 4
@@ -469,7 +472,7 @@ GameObject:
   - component: {fileID: 1354604260}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

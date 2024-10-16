@@ -7,17 +7,24 @@ public class PlayerMove : MonoBehaviour
 {
     [Header("Player Movement")]
     public float speed;
-    public float dashPower;
     public LayerMask objLayers;
 
     [Header("Jump")]
     public float jumpPower;
-
-
-    private bool isStun;
-    private bool isDash;
     
+    
+    [Header("GroundCheck")]
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float checkGroundDistance;
+    
+    private bool isStun;
+    private bool isDash = false;
     private Vector2 inputVec;
+    private float jumpCnt;
+    
+    
+    public bool IsGround => Physics2D.Raycast(transform.position, Vector2.down, checkGroundDistance, groundLayer);
+    
     // Components
     private Animator ani;
     private Rigidbody2D rigid;
@@ -48,13 +55,27 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
+    
+    void Jump()
+    {
+        if (!isStun)
+        {
+                if (Input.GetKeyDown(KeyCode.Space) && jumpCnt < 2)
+                {
+                    
+                    rigid.velocity = Vector2.zero;
+                    rigid.AddForce(Vector2.up * jumpPower,ForceMode2D.Impulse);
+                    jumpCnt++;
+                }
+        }
+    }
     bool IsFrontObj()
     {
         return Physics2D.Raycast(transform.position, Vector2.right * (transform.localScale.x > 0 ? 1 : -1), 0.5f, objLayers) == true;
     }
     void Update()
     {
-        
+        Jump();
     }
 
     private void FixedUpdate()
@@ -67,5 +88,12 @@ public class PlayerMove : MonoBehaviour
     {
         ani = GetComponentInChildren<Animator>();
         rigid = GetComponent<Rigidbody2D>();
+    }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.name.Equals("Ground"))
+        {
+            jumpCnt = 0;
+        }
     }
 }
