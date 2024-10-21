@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Magic_Cane : MonoBehaviour
 {
+    
     [Header("Cane_Move")]
     float rightMax = 2.0f; //좌로 이동가능한 (x)최대값
     float leftMax = -2.0f; //우로 이동가능한 (x)최대값
     float currentPosition; //현재 위치(x) 저장
-    float direction = 3.0f; //이동속도+방향
+    public float direction = 3.0f; //이동속도+방향
 
     Rigidbody2D rigid;
 
@@ -18,7 +19,7 @@ public class Magic_Cane : MonoBehaviour
     }
     void Start()
     {
-
+       
         currentPosition = transform.position.x;
 
     }
@@ -54,7 +55,7 @@ public class Magic_Cane : MonoBehaviour
         //현재 위치(x)가 좌로 이동가능한 (x)최대값보다 크거나 같다면
         //이동속도+방향에 -1을 곱해 반전을 해주고 현재위치를 좌로 이동가능한 (x)최대값으로 설정
 
-        transform.position = new Vector3(currentPosition, 0, 0);
+        transform.position = new Vector3(currentPosition, transform.position.y - 1 * Time.deltaTime, 0);
 
         //"Magic_Cane"의 위치를 계산된 현재위치로 처리
 
