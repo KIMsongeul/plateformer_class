@@ -37,10 +37,8 @@ public class PlayerMove : MonoBehaviour
             {
                 
                 Vector2 nextVec = inputVec.normalized * (speed);
-                rigid.velocity = !IsFrontObj() ? new Vector2(nextVec.x, rigid.velocity.y) : new Vector2(0, rigid.velocity.y);
+                rigid.linearVelocity = !IsFrontObj() ? new Vector2(nextVec.x, rigid.linearVelocity.y) : new Vector2(0, rigid.linearVelocity.y);
             }
-
-
 
             if (!isDash)
             {
@@ -63,7 +61,7 @@ public class PlayerMove : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space) && jumpCnt < 2)
                 {
                     
-                    rigid.velocity = Vector2.zero;
+                    rigid.linearVelocity = Vector2.zero;
                     rigid.AddForce(Vector2.up * jumpPower,ForceMode2D.Impulse);
                     jumpCnt++;
                 }
